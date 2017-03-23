@@ -1,0 +1,55 @@
+[
+	{
+		"resourceIdentifier": "/sites/0",
+		"attributes": [
+			{
+				"issuer": "https://acs.predix.io",
+				"name": "site",
+				"value": "0"
+			}]
+	},
+	{
+		"resourceIdentifier": "/sites/1",
+		"attributes": [
+			{
+				"issuer": "https://acs.predix.io",
+				"name": "site",
+				"value": "1"
+			}]
+	},
+	{
+		"resourceIdentifier": "/sites/2",
+		"attributes": [
+			{
+				"issuer": "https://acs.predix.io",
+				"name": "site",
+				"value": "2"
+			}]
+	},
+
+	{
+		"resourceIdentifier": "/sites/0/assets/0",
+		"parents": [{"identifier": "/sites/0"}]
+	},
+	{
+		"resourceIdentifier": "/sites/0/assets/1",
+		"parents": [{"identifier": "/sites/0"}]
+	},
+	{
+		"resourceIdentifier": "/sites/1/assets/0",
+		"parents": [{"identifier": "/sites/1"}]
+	},
+	{
+		"resourceIdentifier": "/sites/1/assets/1",
+		"parents": [{"identifier": "/sites/1"}]
+	},
+	{
+		"resourceIdentifier": "/sites/2/assets/0",
+		"parents": [{"identifier": "/sites/2"}]
+	},
+	{
+		"resourceIdentifier": "/sites/2/assets/1",
+		"parents": [{"identifier": "/sites/2"}]
+	}
+
+]

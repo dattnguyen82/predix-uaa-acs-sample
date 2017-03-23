@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:oauth="http://www.springframework.org/schema/security/oauth2"
+    xmlns:sec="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/security/oauth2 http://www.springframework.org/schema/security/spring-security-oauth2.xsd
+        http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <context:annotation-config />
+
+    <sec:authentication-manager />
+
+    <http pattern="/**" request-matcher="ant"
+        xmlns="http://www.springframework.org/schema/security"
+        disable-url-rewriting="true" use-expressions="true"
+        entry-point-ref="preAuthenticationEntryPoint">
+        <expression-handler ref="acsExpressionHandler" />
+
+        <intercept-url pattern="/welcome" access="isFullyAuthenticated()" />
+
+        <!-- Authorize using ACS -->
+        <intercept-url pattern="/resource" access="isAcsAuthorized() and isFullyAuthenticated()" />
+
+        <intercept-url pattern="/assets/**" access="isAcsAuthorized() and isFullyAuthenticated()" />
+
+        <intercept-url pattern="/sites/**" access="isAcsAuthorized() and isFullyAuthenticated()" />
+
+        <intercept-url pattern="/admin" access="isAcsAuthorized() and isFullyAuthenticated()" />
+
+        <anonymous enabled="false" />
+        <csrf disabled="true"/>
+        <custom-filter ref="oauth2ServiceFilter" position="PRE_AUTH_FILTER" />
+    </http>
+
+    <!-- ************************************* -->
+    <!-- OAuth2 Related Configuration : Begin -->
+    <oauth:resource-server id="oauth2ServiceFilter"
+        token-services-ref="tokenServices" />
+
+    <bean id="tokenServices"
+        class="com.ge.predix.uaa.token.lib.FastTokenServices">
+        <property name="trustedIssuers">
+            <list>
+                <value>${uaa}</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="preAuthenticationEntryPoint"
+        class="org.springframework.security.oauth2.provider.error.OAuth2AuthenticationEntryPoint" />
+
+    <oauth:client id="oauth2ClientFilter" />
+    <!-- OAuth2 Related Configuration : End -->
+
+    <import resource="classpath:acs-spring-config.xml" />
+</beans>

@@ -1,0 +1,9 @@
+---
+applications:
+- name: ev-acs-demo
+  memory: 512MB
+  instances: 1
+  timeout: 180
+  host: ev-acs-demo
+  path: ./target/gs-spring-boot-0.1.0.jar
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git

@@ -1,0 +1,45 @@
+[{
+	"subjectIdentifier": "role-site_manager",
+	"attributes": [{
+		"issuer": "https://acs.predix.io",
+		"name": "role",
+		"value": "site_manager"
+	}, {
+		"issuer": "https://acs.predix.io",
+		"name": "group",
+		"value": "Managers"
+	}]
+}, {
+	"subjectIdentifier": "role-engineer",
+	"attributes": [{
+		"issuer": "https://acs.predix.io",
+		"name": "role",
+		"value": "engineer"
+	}, {
+		"issuer": "https://acs.predix.io",
+		"name": "group",
+		"value": "Engineers"
+	}]
+}, {
+	"subjectId": "2dc2b7ee-dfdc-4a9a-9c19-7a961393ce0d",
+	"subjectIdentifier": "user1@ge.com",
+	"attributes": [{
+		"issuer": "https://acs.predix.io",
+		"name": "site",
+		"value": "0"
+	}],
+	"parents": [{
+		"identifier": "role-engineer"
+	}]
+}, {
+	"subjectId": "a0a768b9-ddc0-482c-8fa9-77d2e01e4143",
+	"subjectIdentifier": "admin@ge.com",
+	"attributes": [{
+		"issuer": "https://acs.predix.io",
+		"name": "site",
+		"value": "0"
+	}],
+	"parents": [{
+		"identifier": "role-site_manager"
+	}]
+}]

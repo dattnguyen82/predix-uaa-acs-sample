@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<settings xmlns="http://maven.apache.org/SETTINGS/1.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
+<!-- Getting Your Artifactory Encrypted Password
+| 1. Visit: https://devcloud.swcoe.ge.com/artifactory
+| 2. At the top right, click your SSO.
+| 3. Type in your SSO password in the Current Password textbox and click Unlock.
+| 4. You'll be given the encrypted password along with an escaped version.
+| 5. Use the escaped version below (Artifactory should display an example).
+-->
+  <servers>
+     <server>
+      <id>swcoe-artifactory-credentials</id>
+      <username>svc-dsp-reader</username> 
+      <password>\{DESede\}KdBJ8yO7kUyeAnzBMEg7KA==</password>
+    </server>
+
+    <server>
+        <id>artifactory.repo</id>
+        <username>svc-dsp-user</username>
+        <password>UrJGgxccNH</password>
+    </server>
+
+    <server>
+                <id>artifactory.repo1</id>
+        <username>svc-dsp-user</username>
+        <password>UrJGgxccNH</password>
+    </server>
+    <server>
+                <id>devcloud-artifactory</id>
+        <username>svc-dsp-user</username>
+        <password>UrJGgxccNH</password>
+    </server>
+    <server>
+                <id>artifactory.releases</id>
+        <username>svc-dsp-user</username>
+        <password>UrJGgxccNH</password>
+    </server>
+    <server>
+                <id>artifactory.snapshots</id>
+        <username>svc-dsp-user</username>
+        <password>UrJGgxccNH</password>
+    </server>
+  </servers>
+<!-- Repositories
+| You can specify your repos here or in your project's own pom.xml files.
+-->
+  <profiles>
+    <profile>
+      <repositories>
+    <repository>
+        <id>artifactory.repo</id>
+        <name>PREDIX Artifactory Repo</name>
+        <url>https://devcloud.swcoe.ge.com/artifactory/DSP-SNAPSHOT</url>
+    </repository>
+    <repository>
+        <id>artifactory.repo1</id>
+        <name>artifactory.repo</name>
+        <url>https://devcloud.swcoe.ge.com/artifactory/repo</url>
+    </repository>
+    <repository>
+        <snapshots>
+            <enabled>false</enabled>
+        </snapshots>
+        <id>devcloud-artifactory</id>
+        <name>libs-release</name>
+        <url>https://devcloud.swcoe.ge.com/artifactory/libs-release</url>
+    </repository>
+    <repository>
+    	<releases>
+    			<enabled>true</enabled>
+    			<updatePolicy>always</updatePolicy>
+    	</releases>
+    	<snapshots>
+      			<enabled>false</enabled>
+    	</snapshots>
+    	<id>artifactory.releases</id>
+    	<name>artifactory.releases</name>
+    	<url>https://devcloud.swcoe.ge.com/artifactory/FWAIB</url>
+    </repository>
+    <repository>
+    	<snapshots>
+     			<enabled>true</enabled>
+     			<updatePolicy>always</updatePolicy>
+    	</snapshots>
+    	<id>artifactory.snapshots</id>
+    	<name>artifactory.snapshots</name>
+    	<url>https://devcloud.swcoe.ge.com/artifactory/FWAIB-SNAPSHOT</url>
+    </repository>
+</repositories>
+
+      <pluginRepositories>
+        <pluginRepository>
+          <snapshots>
+            <enabled>false</enabled>
+          </snapshots>
+          <id>devcloud-artifactory</id>
+          <name>plugins-release</name>
+          <url>https://devcloud.swcoe.ge.com/artifactory/plugins-release</url>
+        </pluginRepository>
+        <pluginRepository>
+          <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>always</updatePolicy>
+          </snapshots>
+          <id>devcloud-artifactory-snapshot</id>
+          <name>plugins-snapshot</name>
+          <url>https://devcloud.swcoe.ge.com/artifactory/plugins-snapshot</url>
+        </pluginRepository>
+      </pluginRepositories>
+
+      <id>artifactory</id>
+     </profile>
+
+     <profile>
+            <id>sonar</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <!-- Sonar 5.0 -->
+                <sonar.jdbc.url>jdbc:mysql://3.39.89.65:3306/sonar?useUnicode=true&amp;characterEncoding=utf8</sonar.jdbc.url>
+                <sonar.jdbc.driverClassName>com.mysql.jdbc.Driver</sonar.jdbc.driverClassName>
+                <sonar.jdbc.username>sonar</sonar.jdbc.username>
+                <sonar.jdbc.password>sonar</sonar.jdbc.password>
+                <sonar.host.url>http://3.39.89.65:9000</sonar.host.url>
+            </properties>
+        </profile>
+
+  </profiles>
+
+  <activeProfiles>
+    <activeProfile>artifactory</activeProfile>
+  </activeProfiles>
+
+  <proxies>
+<proxy>
+			<id>optional</id>
+			<active>true</active>
+			<protocol>http</protocol>
+			<!--<host>proxy-src.research.ge.com</host> -->
+			<host>sjc1intproxy01.crd.ge.com</host>
+			<port>8080</port>
+			<nonProxyHosts>*.ge.com|api.ges-apps.ice.ge.com|api.grc-apps.svc.ice.ge.com|login.grc-apps.svc.ice.ge.com|loggregator.grc-apps.svc.ice.ge.com|uaa.grc-apps.svc.ice.ge.com|console.grc-apps.svc.ice.ge.com|3.39.*</nonProxyHosts>
+		</proxy>
+		<proxy>
+			<id>optional-https</id>
+			<active>true</active>
+			<protocol>https</protocol>
+			<!--<host>proxy-src.research.ge.com</host> -->
+			<host>sjc1intproxy01.crd.ge.com</host>
+			<port>8080</port>
+			<nonProxyHosts>*.ge.com|api.ges-apps.ice.ge.com|api.grc-apps.svc.ice.ge.com|login.grc-apps.svc.ice.ge.com|loggregator.grc-apps.svc.ice.ge.com|uaa.grc-apps.svc.ice.ge.com|console.grc-apps.svc.ice.ge.com|3.39.*</nonProxyHosts>
+		</proxy>
+  </proxies>
+    
+    
+</settings>
+

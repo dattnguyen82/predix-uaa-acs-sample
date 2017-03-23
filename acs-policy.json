@@ -1,0 +1,108 @@
+{
+    "name": "demo-acs-policy-old",
+    "policies": [{
+        "name": "allow-all-requests-for-assets-manager",
+        "target": {
+            "name": "permit-to-asset",
+            "subject": {
+                "name": "is manager assigned to site",
+                "attributes": [{
+                    "issuer": "https://acs.predix.io",
+                    "name": "site"
+                }, {
+                    "issuer": "https://acs.predix.io",
+                    "name": "group"
+                }]
+            },
+            "resource": {
+                "name": "site",
+                "uriTemplate": "/sites/{site_id}/asset/{asset_id}"
+            }
+        },
+        "conditions": [{
+            "name": "is a manager",
+            "condition": "match.single(subject.attributes('https://acs.predix.io', 'group'),'Managers')"
+        }, {
+            "name": "assigned to site",
+            "condition": "match.single(subject.attributes('https://acs.predix.io', 'site'),resource.uriVariable('site_id'))"
+        }],
+        "effect": "PERMIT"
+    },
+        {
+            "name": "allow-get-requests-for-assets",
+            "target": {
+                "name": "permit-to-asset",
+                "action": "GET",
+                "subject": {
+                    "name": "is manager assigned to site",
+                    "attributes": [{
+                        "issuer": "https://acs.predix.io",
+                        "name": "site"
+                    }]
+                },
+                "resource": {
+                    "name": "site",
+                    "uriTemplate": "/sites/{site_id}/asset{asset_id}"
+                }
+            },
+            "conditions": [{
+                "name": "assigned to site",
+                "condition": "match.single(subject.attributes('https://acs.predix.io', 'site'),resource.uriVariable('site_id'))"
+            }],
+            "effect": "PERMIT"
+        },
+        {
+            "name": "allow-all-requests-for-site-manager",
+            "target": {
+                "name": "permit-to-sites",
+                "subject": {
+                    "name": "is manager assigned to site",
+                    "attributes": [{
+                        "issuer": "https://acs.predix.io",
+                        "name": "site"
+                    }, {
+                        "issuer": "https://acs.predix.io",
+                        "name": "group"
+                    }]
+                },
+                "resource": {
+                    "name": "site",
+                    "uriTemplate": "/sites/{site_id}"
+                }
+            },
+            "conditions": [{
+                "name": "is a manager",
+                "condition": "match.single(subject.attributes('https://acs.predix.io', 'group'),'Managers')"
+            }, {
+                "name": "assigned to site",
+                "condition": "match.single(subject.attributes('https://acs.predix.io', 'site'),resource.uriVariable('site_id'))"
+            }],
+            "effect": "PERMIT"
+        }, {
+            "name": "allow-get-requests-for-site-users",
+            "target": {
+                "name": "permit-to-sites",
+                "action": "GET",
+                "subject": {
+                    "name": "is assigned to site",
+                    "attributes": [{
+                        "issuer": "https://acs.predix.io",
+                        "name": "site"
+                    }]
+                },
+                "resource": {
+                    "name": "site",
+                    "uriTemplate": "/sites/{site_id}"
+                }
+            },
+            "conditions": [{
+                "name": "assigned to site",
+                "condition": "match.single(subject.attributes('https://acs.predix.io', 'site'),resource.uriVariable('site_id'))"
+            }],
+            "effect": "PERMIT"
+
+        }, {
+            "name": "catch-all-DENY-policy",
+            "effect": "DENY"
+        }]
+}
